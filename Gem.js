@@ -6,7 +6,8 @@ Gem = function(scale, time, pitch, width, height)
   this.width = width;
   this.height = height;
 
-  this.text = "G";
+  this.text = "<b style='font-size: " +
+    (13 + 2 * Math.floor(Math.sqrt(this.width * this.height))) + "px'>G</b>";
 }
 
 Gem.prototype.getColour = function()

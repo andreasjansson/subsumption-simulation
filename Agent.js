@@ -33,14 +33,17 @@ Agent.prototype.step = function()
 
 Agent.prototype.getScaledNote = function()
 {
-  var octave = Math.floor(this.pitch) / 12;
+  var octave = Math.floor(this.pitch / 12);
   var note = Math.floor(this.pitch) % 12;
   var scaledNote;
   var i = 0;
 
   while((scaledNote = this.scale.notes[i ++]) <= note &&
-        i < this.scale.length)
+        i < this.scale.notes.length)
     ;
+
+  if(this.index == 5)
+    console.log(this.scale.notes + " " + note + " " + scaledNote + " ... " + this.pitch + ": " + (scaledNote + octave * 12));
 
   return scaledNote + octave * 12;
 }
@@ -103,7 +106,7 @@ Agent.prototype.getNewPitch = function()
 
 Agent.prototype.getText = function()
 {
-  return this.text;
+  return 8-this.index ;//this.text;
 }
 
 Agent.prototype.getColour = function()
