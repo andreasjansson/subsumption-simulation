@@ -10,7 +10,8 @@ Agent = function(config, initialPitch, index)
   this.collisions = [];
 
   this.text = "x";
-  this.colourFrom = Agent.COLOUR_FROM_SCALE;
+  this.colourFrom = this.config.agentColourFrom ?
+    this.config.agentColourFrom : Agent.COLOUR_FROM_SCALE;
 }
 
 Agent.COLOUR_FROM_INDEX = 1;
@@ -41,9 +42,6 @@ Agent.prototype.getScaledNote = function()
   while((scaledNote = this.scale.notes[i ++]) <= note &&
         i < this.scale.notes.length)
     ;
-
-  if(this.index == 5)
-    console.log(this.scale.notes + " " + note + " " + scaledNote + " ... " + this.pitch + ": " + (scaledNote + octave * 12));
 
   return scaledNote + octave * 12;
 }
@@ -106,7 +104,8 @@ Agent.prototype.getNewPitch = function()
 
 Agent.prototype.getText = function()
 {
-  return 8-this.index ;//this.text;
+  // don't tell anyone, but this simulation is actually upside-down.
+  return this.config.agentCount - this.index;
 }
 
 Agent.prototype.getColour = function()

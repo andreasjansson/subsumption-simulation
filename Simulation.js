@@ -15,8 +15,8 @@ Simulation.prototype.createAgents = function()
   var config = this.config;
   var agents = [];
   for(var i = 0; i < config.agentCount; i ++) {
-    var initialPitch = (config.maxPitch - config.minPitch) /
-      (config.agentCount + 2) * (i + 1) + config.minPitch;
+    var initialPitch = ((config.maxPitch - config.minPitch) /
+                        (config.agentCount + 1)) * (i + 1) + config.minPitch;
     agents.push(new Agent(config, initialPitch, i));
   }
 
@@ -53,8 +53,7 @@ Simulation.prototype.findAgentCollisions = function()
 
 Simulation.prototype.elements = function()
 {
-  var elements = this.agents;
-  return elements;
+  return this.agents;
 }
 
 Simulation.prototype.destroy = function()
@@ -66,10 +65,19 @@ Simulation.prototype.destroy = function()
 // is scaled and the scaled pitch may end up outside the border.
 Simulation.prototype.getBorders = function()
 {
-  var borders = [];
-  borders = borders.concat(
-    BorderElement.makeBorder(this.config.endTime + 1, this.config.minPitch - 1),
-    BorderElement.makeBorder(this.config.endTime + 1, this.config.maxPitch + 1));
-
-  return borders;
+  return this.getUpperBorder().concat(this.getLowerBorder());
 }
+
+Simulation.prototype.getUpperBorder = function()
+{
+  return BorderElement.makeBorder(this.config.endTime + 1,
+                                  this.config.minPitch - 1);
+
+}
+
+Simulation.prototype.getLowerBorder = function()
+{
+  return BorderElement.makeBorder(this.config.endTime + 1,
+                                  this.config.maxPitch + 1);
+}
+
